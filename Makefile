@@ -91,10 +91,10 @@ CORE_FILES:=$(addprefix src/,$(CORE_FILES))
 LIB_FILES:=$(addprefix lib/,$(LIB_FILES))
 BROWSER_FILES:=$(addprefix src/browser/,$(BROWSER_FILES))
 
-build/v86_all.js: $(CLOSURE) src/*.js src/browser/*.js lib/*.js
+build/v86_all.js: src/*.js src/browser/*.js lib/*.js
 	mkdir -p build
 	-ls -lh build/v86_all.js
-	java -jar $(CLOSURE) \
+	node_modules/google-closure-compiler-osx/compiler\
 		--js_output_file build/v86_all.js\
 		--define=DEBUG=false\
 		--define=ENABLE_ACPI=$(ACPI)\
@@ -112,12 +112,13 @@ build/v86_all.js: $(CLOSURE) src/*.js src/browser/*.js lib/*.js
 	ls -lh build/v86_all.js
 
 
-build/libv86.js: $(CLOSURE) src/*.js lib/*.js src/browser/*.js
+build/libv86.js: src/*.js lib/*.js src/browser/*.js
 	mkdir -p build
 	-ls -lh build/libv86.js
-	java -jar $(CLOSURE) \
+
+	node_modules/google-closure-compiler-osx/compiler\
 		--js_output_file build/libv86.js\
-		--define=DEBUG=false\
+		--define=DEBUG=true\
 		--define=ENABLE_ACPI=$(ACPI)\
 		$(CLOSURE_SOURCE_MAP)\
 		$(CLOSURE_FLAGS)\
@@ -154,11 +155,12 @@ update_version:
 	grep $$COMMIT index.html
 
 
-$(CLOSURE):
-	wget -P $(CLOSURE_DIR) https://dl.google.com/closure-compiler/compiler-20190709.zip
-	unzip -d closure-compiler $(CLOSURE_DIR)/compiler-20190709.zip \*.jar
-	mv $(CLOSURE_DIR)/*.jar $(CLOSURE)
-	rm $(CLOSURE_DIR)/compiler-20190709.zip
+#$(CLOSURE):
+#    yarn add google-closure-compiler-osx
+    #wget -P $(CLOSURE_DIR) https://dl.google.com/closure-compiler/compiler-20190709.zip
+	#unzip -d closure-compiler $(CLOSURE_DIR)/compiler-20190709.zip \*.jar
+	#mv $(CLOSURE_DIR)/closure-compiler-v20190709.jar $(CLOSURE)
+	#rm $(CLOSURE_DIR)/compiler-20190709.zip
 
 tests: build/libv86.js
 	./tests/full/run.js
