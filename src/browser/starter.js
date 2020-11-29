@@ -125,7 +125,12 @@ function V86Starter(options)
     settings.uart2 = options["uart2"] || false;
     settings.uart3 = options["uart3"] || false;
 
-    if(options["network_relay_url"])
+    if(options["network_adapter"])
+    {
+        this.network_adapter = options["network_adapter"](adapter_bus);
+        settings.enable_ne2k = true;
+
+    } else if(options["network_relay_url"])
     {
         this.network_adapter = new NetworkAdapter(options["network_relay_url"], adapter_bus);
         settings.enable_ne2k = true;
