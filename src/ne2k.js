@@ -56,8 +56,9 @@
  * @constructor
  * @param {CPU} cpu
  * @param {BusConnector} bus
+ * @param {Array} mac_address - Fixed mac address (optional)
  */
-function Ne2k(cpu, bus)
+function Ne2k(cpu, bus, mac_address)
 {
     /** @const @type {CPU} */
     this.cpu = cpu;
@@ -113,11 +114,11 @@ function Ne2k(cpu, bus)
     this.tsr = 1;
 
     // mac address
-    var mac = [
-        0x00, 0x22, 0x15, 0x10, 0x11, 0x12
-        //Math.random() * 255 | 0,
-        //Math.random() * 255 | 0,
-        //Math.random() * 255 | 0,
+    var mac = mac_address ? mac_address.slice(0, 6) : [
+        0x00, 0x22, 0x15,
+        Math.random() * 255 | 0,
+        Math.random() * 255 | 0,
+        Math.random() * 255 | 0,
     ];
 
     for(var i = 0; i < 6; i++)

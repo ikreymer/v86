@@ -125,6 +125,9 @@ function V86Starter(options)
     settings.uart2 = options["uart2"] || false;
     settings.uart3 = options["uart3"] || false;
 
+    // optional fixed mac address
+    settings.network_mac = null;
+
     if(options["network_adapter"])
     {
         this.network_adapter = options["network_adapter"](adapter_bus);
