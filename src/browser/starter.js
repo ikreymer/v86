@@ -163,6 +163,10 @@ function V86Starter(options)
     {
         this.speaker_adapter = new SpeakerAdapter(adapter_bus);
     }
+    if(options["initial_state"])
+    {
+        settings.initial_state = options.initial_state;
+    }
 
     // ugly, but required for closure compiler compilation
     function put_on_settings(name, buffer)

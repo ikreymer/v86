@@ -118,7 +118,7 @@ build/libv86.js: src/*.js lib/*.js src/browser/*.js
 
 	node_modules/google-closure-compiler-osx/compiler\
 		--js_output_file build/libv86.js\
-		--define=DEBUG=true\
+		--define=DEBUG=false\
 		--define=ENABLE_ACPI=$(ACPI)\
 		$(CLOSURE_SOURCE_MAP)\
 		$(CLOSURE_FLAGS)\
